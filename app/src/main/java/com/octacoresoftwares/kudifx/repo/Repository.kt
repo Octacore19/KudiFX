@@ -16,6 +16,8 @@ class Repository(
 
     suspend fun getAllLatestRate() = local.getAllLatestRate()
 
+    suspend fun getMostRecentRate() = local.getMostRecentRate()
+
     suspend fun saveLatestRate(key: String): Results<Int> =
         withContext(Dispatchers.IO) {
             when (val result = remote.getLatestRate(key)) {

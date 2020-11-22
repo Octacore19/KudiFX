@@ -8,4 +8,5 @@ interface DatabaseRepo {
     suspend fun insertLatestRate(latest: Latest)
     suspend fun getAllRates(): Results<LiveData<List<Rates>>>
     suspend fun getAllLatestRate(): Results<LiveData<List<Latest>>>
+    suspend fun getMostRecentRate(): Results<LiveData<Latest>>
 }

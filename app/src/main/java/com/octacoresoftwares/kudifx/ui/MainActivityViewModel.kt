@@ -13,22 +13,7 @@ import kotlinx.coroutines.launch
 
 class MainActivityViewModel(private val repo: Repository): ViewModel() {
 
-    fun getLatestRate(key: String) {
-        viewModelScope.launch {
-            when(val result = repo.saveLatestRate(key)) {
-                is Results.Success<Int> -> {
-                    getAllRates()
-                    getAllLatestRate()
-                    Log.i("MainActivityViewModel", "Saved successfully: $result")
-                }
-                is Results.Error -> {
-                    Log.wtf("MainActivityViewModel", result.exception)
-                }
-            }
-        }
-    }
-
-    private fun getAllLatestRate() = viewModelScope.launch {
+    fun getAllLatestRate() = viewModelScope.launch {
         when (val result = repo.getAllLatestRate()) {
             is  Results.Success<LiveData<List<Latest>>> -> {
                 Log.i("MainActivityViewModel", " \nGetAllLatestRate Method\n" +
@@ -41,7 +26,17 @@ class MainActivityViewModel(private val repo: Repository): ViewModel() {
         }
     }
 
-    private fun getAllRates() = viewModelScope.launch {
+    fun getMostRecentRate() = viewModelScope.launch {
+        when (val result = repo.getMostRecentRate()) {
+            is Results.Success<LiveData<Latest>> -> {
+                Log.i("MainActivityViewModel", " \nGetMostRecentRate Method\n" +
+                        "Latest: ${result.data.value} \n" +
+                        "Rate: ${result.data.value?.rates}")
+            }
+        }
+    }
+
+    fun getAllRates() = viewModelScope.launch {
         when (val result = repo.getAllRates()) {
             is  Results.Success<LiveData<List<Rates>>> -> {
                 Log.i("MainActivityViewModel", " \nGetAllRates Method\n" +

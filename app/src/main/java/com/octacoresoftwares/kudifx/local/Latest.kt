@@ -14,7 +14,8 @@ data class LatestRate(
 data class Latest(
     @PrimaryKey val timestamp: Long,
     val base: String,
-    val date: String
+    val date: String,
+    val createdAt: Long = System.currentTimeMillis()
 ) {
     @Ignore lateinit var rates: Rates
 }
@@ -22,6 +23,7 @@ data class Latest(
 @Entity(tableName = "rates")
 data class Rates(
     @PrimaryKey var rateTimestamp: Long = 0L,
+    var createdAt: Long = 0L,
     val AED: Double,
     val BTC: Double,
     val CAD: Double,

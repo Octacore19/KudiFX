@@ -6,15 +6,18 @@ import androidx.room.*
 abstract class RatesDao: LatestDao {
 
     suspend fun insertLatestRate(latest: Latest): Long {
-        val res = _insertLatestRate(latest, latest.rates)
-        if (res < 0L) {
-            return -1L
-        }
+        _insertLatestRate(latest, latest.rates)
         return _insertLatest(latest)
     }
 
     @Query("SELECT * FROM rates")
     abstract suspend fun getAllRates(): List<Rates>
+
+    suspend fun getMostRecentRate(): Latest {
+        val latestRate = _getMostRecentRate()
+        latestRate.latest.rates = latestRate.rates
+        return latestRate.latest
+    }
 
     suspend fun getAllLatestRates(): List<Latest> {
         val latestRate = _getAllLatestRates()
@@ -28,6 +31,7 @@ abstract class RatesDao: LatestDao {
 
     private suspend fun _insertLatestRate(latest: Latest, rates: Rates): Long {
         rates.rateTimestamp = latest.timestamp
+        rates.createdAt = latest.createdAt
         return _insertRates(rates)
     }
 }
@@ -43,4 +47,8 @@ interface LatestDao {
     @Transaction
     @Query("SELECT * FROM latest")
     suspend fun _getAllLatestRates(): List<LatestRate>
+
+    @Transaction
+    @Query("SELECT * FROM latest WHERE createdAt = (SELECT MAX(createdAt) FROM latest)")
+    suspend fun _getMostRecentRate(): LatestRate
 }

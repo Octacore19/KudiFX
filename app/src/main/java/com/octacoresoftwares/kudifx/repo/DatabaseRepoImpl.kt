@@ -40,4 +40,13 @@ class DatabaseRepoImpl(
                 Results.Error(e)
             }
         }
+
+    override suspend fun getMostRecentRate(): Results<LiveData<Latest>> =
+        withContext(Dispatchers.IO) {
+            try {
+                Results.Success(MutableLiveData(dao.getMostRecentRate()))
+            } catch (e: Exception) {
+                Results.Error(e)
+            }
+        }
 }
