@@ -1,8 +1,5 @@
 package com.octacoresoftwares.kudifx.remote
 
-import androidx.lifecycle.LiveData
-import com.octacoresoftwares.kudifx.remote.model.LatestRates
-import com.octacoresoftwares.kudifx.remote.model.SymbolsResponse
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -10,7 +7,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
-import retrofit2.http.QueryMap
 import java.util.concurrent.TimeUnit
 
 private const val BASE_URL = "http://data.fixer.io/api/"
@@ -52,5 +48,5 @@ object Service {
 
 interface NetworkApi {
     @GET("/latest")
-    suspend fun getLatestRate(@QueryMap query: Map<String, String>): LatestRates
+    suspend fun getLatestRate(@Query("access_key") key: String): LatestRates
 }

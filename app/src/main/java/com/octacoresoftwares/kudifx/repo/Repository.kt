@@ -1,9 +1,9 @@
 package com.octacoresoftwares.kudifx.repo
 
 import androidx.lifecycle.LiveData
-import com.octacoresoftwares.kudifx.local.model.Latest
-import com.octacoresoftwares.kudifx.local.model.Rates
-import com.octacoresoftwares.kudifx.remote.model.LatestRates
+import com.octacoresoftwares.kudifx.local.Latest
+import com.octacoresoftwares.kudifx.local.Rates
+import com.octacoresoftwares.kudifx.remote.LatestRates
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -16,28 +16,16 @@ class Repository(
 
     suspend fun getAllLatestRate() = local.getAllLatestRate()
 
-    suspend fun saveLatestRate(query: Map<String, String>): Results<Int> =
-        withContext(Dispatchers.IO){
-            when(val result = remote.getLatestRate(query)) {
+    suspend fun saveLatestRate(key: String): Results<Int> =
+        withContext(Dispatchers.IO) {
+            when (val result = remote.getLatestRate(key)) {
                 is Results.Success<LiveData<LatestRates>> -> {
 
                     result.data.value?.let { data ->
-                        val rates = Rates(
-                            BTC = data.rates.BTC,
-                            CAD = data.rates.CAD,
-                            EUR = data.rates.EUR,
-                            GBP = data.rates.GBP,
-                            INR = data.rates.INR,
-                            JPY = data.rates.JPY,
-                            NGN = data.rates.NGN,
-                            PLN = data.rates.PLN,
-                            RSD = data.rates.RSD,
-                            USD = data.rates.USD
-                        )
-
-                        val latest = Latest(timestamp = data.timestamp, date = data.date, base = data.base)
+                        val latest =
+                            Latest(timestamp = data.timestamp, date = data.date, base = data.base)
+                        val rates = generateRate(data = data.rates)
                         latest.rates = rates
-
                         local.insertLatestRate(latest)
                     }
                     Results.Success(0)
@@ -45,4 +33,21 @@ class Repository(
                 is Results.Error -> Results.Error(result.exception)
             }
         }
+
+    private fun generateRate(data: com.octacoresoftwares.kudifx.remote.Rates) = Rates(
+        AED = data.AED,
+        BTC = data.BTC,
+        CAD = data.CAD,
+        EUR = data.EUR,
+        GBP = data.GBP,
+        INR = data.INR,
+        JPY = data.JPY,
+        KES = data.KES,
+        NGN = data.NGN,
+        PLN = data.PLN,
+        QAR = data.QAR,
+        RSD = data.RSD,
+        USD = data.USD,
+        XAF = data.XAF,
+    )
 }

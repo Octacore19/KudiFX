@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.octacoresoftwares.kudifx.local.RatesDao
-import com.octacoresoftwares.kudifx.local.model.Latest
-import com.octacoresoftwares.kudifx.local.model.Rates
+import com.octacoresoftwares.kudifx.local.Latest
+import com.octacoresoftwares.kudifx.local.Rates
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

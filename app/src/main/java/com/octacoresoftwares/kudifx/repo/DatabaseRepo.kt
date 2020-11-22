@@ -1,8 +1,8 @@
 package com.octacoresoftwares.kudifx.repo
 
 import androidx.lifecycle.LiveData
-import com.octacoresoftwares.kudifx.local.model.Latest
-import com.octacoresoftwares.kudifx.local.model.Rates
+import com.octacoresoftwares.kudifx.local.Latest
+import com.octacoresoftwares.kudifx.local.Rates
 
 interface DatabaseRepo {
     suspend fun insertLatestRate(latest: Latest)

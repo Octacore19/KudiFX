@@ -1,22 +1,21 @@
 package com.octacoresoftwares.kudifx.ui
 
 import android.util.Log
-import androidx.lifecycle.*
-import com.octacoresoftwares.kudifx.local.model.Latest
-import com.octacoresoftwares.kudifx.local.model.LatestRate
-import com.octacoresoftwares.kudifx.local.model.Rates
-import com.octacoresoftwares.kudifx.remote.model.LatestRates
-import com.octacoresoftwares.kudifx.remote.model.SymbolsResponse
-import com.octacoresoftwares.kudifx.repo.NetworkRepo
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import com.octacoresoftwares.kudifx.local.Latest
+import com.octacoresoftwares.kudifx.local.Rates
 import com.octacoresoftwares.kudifx.repo.Repository
 import com.octacoresoftwares.kudifx.repo.Results
 import kotlinx.coroutines.launch
 
 class MainActivityViewModel(private val repo: Repository): ViewModel() {
 
-    fun getLatestRate(query: Map<String, String>) {
+    fun getLatestRate(key: String) {
         viewModelScope.launch {
-            when(val result = repo.saveLatestRate(query)) {
+            when(val result = repo.saveLatestRate(key)) {
                 is Results.Success<Int> -> {
                     getAllRates()
                     getAllLatestRate()

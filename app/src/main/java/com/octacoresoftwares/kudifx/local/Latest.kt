@@ -1,4 +1,4 @@
-package com.octacoresoftwares.kudifx.local.model
+package com.octacoresoftwares.kudifx.local
 
 import androidx.room.*
 
@@ -22,14 +22,18 @@ data class Latest(
 @Entity(tableName = "rates")
 data class Rates(
     @PrimaryKey var rateTimestamp: Long = 0L,
+    val AED: Double,
     val BTC: Double,
     val CAD: Double,
     val EUR: Double,
     val GBP: Double,
     val INR: Double,
     val JPY: Double,
+    val KES: Double,
     val NGN: Double,
     val PLN: Double,
+    val QAR: Double,
     val RSD: Double,
-    val USD: Double
+    val USD: Double,
+    val XAF: Double
 )

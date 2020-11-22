@@ -1,9 +1,6 @@
 package com.octacoresoftwares.kudifx.local
 
 import androidx.room.*
-import com.octacoresoftwares.kudifx.local.model.Latest
-import com.octacoresoftwares.kudifx.local.model.LatestRate
-import com.octacoresoftwares.kudifx.local.model.Rates
 
 @Dao
 abstract class RatesDao: LatestDao {
@@ -30,7 +27,7 @@ abstract class RatesDao: LatestDao {
     }
 
     private suspend fun _insertLatestRate(latest: Latest, rates: Rates): Long {
-        rates.latestRateTimestamp = latest.timestamp
+        rates.rateTimestamp = latest.timestamp
         return _insertRates(rates)
     }
 }
