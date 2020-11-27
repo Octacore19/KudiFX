@@ -29,6 +29,10 @@ android {
         }
     }
 
+    buildFeatures {
+        dataBinding true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -77,4 +81,7 @@ dependencies {
     // WorkManager library
     def work_version = "2.4.0"
     implementation "androidx.work:work-runtime-ktx:$work_version"
+
+    // Picasso image library
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

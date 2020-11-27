@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">KudiFX</string>
+    <string name="sign_up">Sign up</string>
+    <string name="currency">Currency</string>
+    <string name="calculator">Calculator</string>
+    <string name="convert">Convert</string>
+    <string name="mid_market">"<u>Mid-market exchange rate at 13:38 UTC"</u></string>
+    <string name="full_stop">.</string>
+    <string name="select">Select</string>
 </resources>

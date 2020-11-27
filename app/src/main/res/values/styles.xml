@@ -1,10 +1,25 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="AppTheme.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"/>
+
+    <style name="AppTheme.Button" parent="Widget.MaterialComponents.Button">
+        <item name="textAllCaps">false</item>
+        <item name="android:padding">16dp</item>
+        <item name="materialThemeOverlay">@style/AppTheme.Button.ThemeOverlay</item>
+    </style>
+
+    <style name="AppTheme.Button.ThemeOverlay">
+        <item name="colorPrimary">@color/color_green</item>
+        <item name="colorOnPrimary">@color/color_white</item>
+    </style>
+
+    <style name="AppTheme.OutlineButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="textAllCaps">false</item>
+        <item name="android:padding">12dp</item>
+    </style>
+
+    <style name="AppTheme.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="textAllCaps">false</item>
+        <item name="android:textColor">@color/color_green</item>
     </style>
 
 </resources>

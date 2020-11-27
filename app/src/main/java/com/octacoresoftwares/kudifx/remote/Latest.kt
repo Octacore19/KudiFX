@@ -14,18 +14,13 @@ data class LatestRates(
 
 @Parcelize
 data class Rates(
-    val AED: Double,
     val BTC: Double,
     val CAD: Double,
     val EUR: Double,
     val GBP: Double,
     val INR: Double,
     val JPY: Double,
-    val KES: Double,
     val NGN: Double,
     val PLN: Double,
-    val QAR: Double,
-    val RSD: Double,
-    val USD: Double,
-    val XAF: Double
+    val USD: Double
 ): Parcelable

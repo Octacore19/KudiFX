@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="origin_entries">
+        <item>EUR</item>
+    </string-array>
+
+    <integer-array name="origin_currency_icons">
+        <item>@drawable/ic_eur</item>
+    </integer-array>
+
+    <string-array name="destination_entries">
+        <item>BTC</item>
+        <item>CAD</item>
+        <item>EUR</item>
+        <item>GBP</item>
+        <item>INR</item>
+        <item>JPY</item>
+        <item>NGN</item>
+        <item>PLN</item>
+        <item>USD</item>
+    </string-array>
+
+    <integer-array name="destination_currency_icons">
+        <item>@drawable/ic_btc</item>
+        <item>@drawable/ic_cad</item>
+        <item>@drawable/ic_eur</item>
+        <item>@drawable/ic_gbp</item>
+        <item>@drawable/ic_inr</item>
+        <item>@drawable/ic_jpy</item>
+        <item>@drawable/ic_ngn</item>
+        <item>@drawable/ic_pln</item>
+        <item>@drawable/ic_usd</item>
+    </integer-array>
+</resources>

@@ -37,19 +37,14 @@ class Repository(
         }
 
     private fun generateRate(data: com.octacoresoftwares.kudifx.remote.Rates) = Rates(
-        AED = data.AED,
         BTC = data.BTC,
         CAD = data.CAD,
         EUR = data.EUR,
         GBP = data.GBP,
         INR = data.INR,
         JPY = data.JPY,
-        KES = data.KES,
         NGN = data.NGN,
         PLN = data.PLN,
-        QAR = data.QAR,
-        RSD = data.RSD,
         USD = data.USD,
-        XAF = data.XAF,
     )
 }

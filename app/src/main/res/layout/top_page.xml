@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="currentAdapter"
+            type="com.octacoresoftwares.kudifx.ui.spinner.CountryAdapter" />
+
+        <variable
+            name="destinationAdapter"
+            type="com.octacoresoftwares.kudifx.ui.spinner.CountryAdapter" />
+
+        <variable
+            name="spinnerListener"
+            type="android.widget.AdapterView.OnItemSelectedListener" />
+
+        <variable
+            name="vm"
+            type="com.octacoresoftwares.kudifx.ui.MainActivityViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="16dp"
+        android:paddingTop="24dp"
+        android:paddingEnd="16dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/menu_icon"
+            style="@style/AppTheme.TextButton"
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:text="@null"
+            app:icon="@drawable/ic_menu"
+            app:iconTint="@color/color_green"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sign_up_button"
+            style="@style/AppTheme.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@string/sign_up"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/menu_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/menu_icon" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/materialTextView"
+            style="?textAppearanceHeadline3"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="36dp"
+            android:text="@string/currency"
+            android:textColor="@color/color_blue1"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/menu_icon" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/materialTextView2"
+            style="?textAppearanceHeadline3"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/calculator"
+            android:textColor="@color/color_blue1"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialTextView" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textView3"
+            style="?textAppearanceHeadline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/full_stop"
+            android:textColor="@color/color_green"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/materialTextView2"
+            app:layout_constraintStart_toEndOf="@+id/materialTextView2" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/origin_currency_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialTextView2"
+            app:suffixText="EUR">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/origin_currency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/destination_currency_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/origin_currency_layout"
+            app:suffixText="PLN">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/destination_currency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/current_selection"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="48dp"
+            android:background="@drawable/spinner_background"
+            android:dropDownWidth="match_parent"
+            android:paddingStart="4dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="8dp"
+            android:spinnerMode="dropdown"
+            app:adapter="@{currentAdapter}"
+            app:onItemSelected="@{spinnerListener}"
+            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/destination_currency_layout" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/current_selection"
+            app:layout_constraintEnd_toStartOf="@+id/destination_selection"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/current_selection"
+            app:layout_constraintTop_toTopOf="@+id/current_selection"
+            app:srcCompat="@drawable/ic_transfer"
+            tools:ignore="ContentDescription" />
+
+        <Spinner
+            android:id="@+id/destination_selection"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/spinner_background"
+            android:dropDownWidth="match_parent"
+            android:paddingStart="4dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="8dp"
+            android:spinnerMode="dropdown"
+            app:adapter="@{destinationAdapter}"
+            app:onItemSelected="@{spinnerListener}"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/materialButton2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/convert"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/current_selection" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialButton2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mid_market"
+                android:textAppearance="@style/TextAppearanceBody1" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_info"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
