@@ -4,7 +4,10 @@
     <string name="currency">Currency</string>
     <string name="calculator">Calculator</string>
     <string name="convert">Convert</string>
-    <string name="mid_market">"<u>Mid-market exchange rate at 13:38 UTC"</u></string>
+    <string name="mid_market"><u>Mid-market exchange rate at</u></string>
     <string name="full_stop">.</string>
     <string name="select">Select</string>
+    <string name="past_90_days">Past 90 days</string>
+    <string name="past_30_days">Past 30 days</string>
+    <string name="get_rate_alerts_straight_to_your_email_inbox"><u>Get rate alerts straight to your email inbox</u></string>
 </resources>

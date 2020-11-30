@@ -6,20 +6,12 @@
     <data>
 
         <variable
-            name="currentAdapter"
-            type="com.octacoresoftwares.kudifx.ui.spinner.CountryAdapter" />
-
-        <variable
-            name="destinationAdapter"
-            type="com.octacoresoftwares.kudifx.ui.spinner.CountryAdapter" />
-
-        <variable
-            name="spinnerListener"
-            type="android.widget.AdapterView.OnItemSelectedListener" />
-
-        <variable
             name="vm"
             type="com.octacoresoftwares.kudifx.ui.MainActivityViewModel" />
+
+        <variable
+            name="presenter"
+            type="com.octacoresoftwares.kudifx.ui.MainActivityPresenter" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -31,9 +23,7 @@
             android:id="@+id/content"
             layout="@layout/content_main"
             app:vm="@{vm}"
-            app:currentAdapter="@{currentAdapter}"
-            app:destinationAdapter="@{destinationAdapter}"
-            app:spinnerListener="@{spinnerListener}" />
+            app:presenter="@{presenter}"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

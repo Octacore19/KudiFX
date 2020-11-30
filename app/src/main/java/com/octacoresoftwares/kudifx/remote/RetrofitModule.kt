@@ -1,5 +1,7 @@
 package com.octacoresoftwares.kudifx.remote
 
+import dagger.Module
+import dagger.Provides
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -8,33 +10,30 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 private const val BASE_URL = "http://data.fixer.io/api/"
 
-object Service {
+@Module
+class RetrofitModule {
 
-    @JvmStatic
-    fun createService(): NetworkApi
-            = getRetrofitService().create(NetworkApi::class.java)
+    @Provides
+    @Singleton
+    fun provideNetworkApi(retrofit: Retrofit): NetworkApi
+            = retrofit.create(NetworkApi::class.java)
 
-    fun createService(baseUrl: HttpUrl): NetworkApi
-            = getRetrofitService(baseUrl).create(NetworkApi::class.java)
 
-    @JvmStatic
-    private fun getRetrofitService() = Retrofit.Builder()
+    @Provides
+    @Singleton
+    fun provideRetrofit(client: OkHttpClient) = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .client(getClient())
+            .client(client)
             .build()
 
-    private fun getRetrofitService(baseUrl: HttpUrl) = Retrofit.Builder()
-        .baseUrl(baseUrl)
-        .addConverterFactory(GsonConverterFactory.create())
-        .client(getClient())
-        .build()
-
-    @JvmStatic
-    private fun getClient(): OkHttpClient {
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 

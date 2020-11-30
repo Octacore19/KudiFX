@@ -15,6 +15,8 @@ data class Latest(
     @PrimaryKey val timestamp: Long,
     val base: String,
     val date: String,
+    val day: String,
+    val year: String,
     val createdAt: Long = System.currentTimeMillis()
 ) {
     @Ignore lateinit var rates: Rates

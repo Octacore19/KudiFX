@@ -5,7 +5,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.octacoresoftwares.kudifx.R
 import com.octacoresoftwares.kudifx.local.AppDatabase
-import com.octacoresoftwares.kudifx.remote.Service
+import com.octacoresoftwares.kudifx.remote.RetrofitModule
 import com.octacoresoftwares.kudifx.repo.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -16,9 +16,12 @@ class LatestRatesWorker(
 ): CoroutineWorker(context, workerParams) {
 
     override suspend fun doWork(): Result {
-        val remote = NetworkRepoImpl(Service.createService()) as NetworkRepo
+        val remote = NetworkRepoImpl(
+            RetrofitModule().provideNetworkApi(
+                RetrofitModule().provideRetrofit(
+                    RetrofitModule().provideOkHttpClient()))) as NetworkRepo
         val local = DatabaseRepoImpl(AppDatabase.getDatabase(context).ratesDao()) as DatabaseRepo
-        val repo = Repository(local, remote)
+        val repo = RepositoryImpl(local, remote)
 
         return withContext(Dispatchers.IO) {
             try {

@@ -82,6 +82,13 @@ dependencies {
     def work_version = "2.4.0"
     implementation "androidx.work:work-runtime-ktx:$work_version"
 
+    def dagger_version = "2.27"
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
     // Picasso image library
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // Chart library
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

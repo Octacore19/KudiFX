@@ -19,7 +19,6 @@ open class ObservableViewModel: ViewModel(), Observable {
     /**
      * Notifies listeners that all properties of this instance have changed.
      */
-    @Suppress("unused")
     fun notifyChange() {
         callbacks.notifyCallbacks(this, 0, null)
     }
@@ -31,7 +30,6 @@ open class ObservableViewModel: ViewModel(), Observable {
      *
      * @param fieldId The generated BR id for the Bindable field.
      */
-    @Suppress("KDocUnresolvedReference")
     fun notifyPropertyChanged(fieldId: Int) {
         callbacks.notifyCallbacks(this, fieldId, null)
     }

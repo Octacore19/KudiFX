@@ -1,5 +1,8 @@
 <resources>
-    <style name="AppTheme.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"/>
+    <style name="AppTheme.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@android:color/darker_gray</item>
+        <item name="suffixTextColor">@android:color/darker_gray</item>
+    </style>
 
     <style name="AppTheme.Button" parent="Widget.MaterialComponents.Button">
         <item name="textAllCaps">false</item>
@@ -20,6 +23,20 @@
     <style name="AppTheme.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="textAllCaps">false</item>
         <item name="android:textColor">@color/color_green</item>
+    </style>
+
+    <style name="AppTheme.TextButton.Group.Single" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="textAllCaps">false</item>
+        <item name="android:textColor">@color/color_grey1</item>
+    </style>
+
+    <style name="AppTheme.CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="materialThemeOverlay">@style/AppTheme.CardView.ThemeOverlay</item>
+    </style>
+
+    <style name="AppTheme.CardView.ThemeOverlay">
+        <item name="colorSurface">@color/color_blue3</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearanceMediumComponent.CardView</item>
     </style>
 
 </resources>

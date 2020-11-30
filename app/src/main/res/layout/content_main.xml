@@ -5,20 +5,12 @@
     <data>
 
         <variable
-            name="currentAdapter"
-            type="com.octacoresoftwares.kudifx.ui.spinner.CountryAdapter" />
-
-        <variable
-            name="destinationAdapter"
-            type="com.octacoresoftwares.kudifx.ui.spinner.CountryAdapter" />
-
-        <variable
-            name="spinnerListener"
-            type="android.widget.AdapterView.OnItemSelectedListener" />
-
-        <variable
             name="vm"
             type="com.octacoresoftwares.kudifx.ui.MainActivityViewModel" />
+
+        <variable
+            name="presenter"
+            type="com.octacoresoftwares.kudifx.ui.MainActivityPresenter" />
     </data>
 
     <ScrollView
@@ -28,20 +20,20 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <include
                 android:id="@+id/top_page"
                 layout="@layout/top_page"
                 app:vm="@{vm}"
-                app:currentAdapter="@{currentAdapter}"
-                app:destinationAdapter="@{destinationAdapter}"
-                app:spinnerListener="@{spinnerListener}" />
+                app:presenter="@{presenter}"/>
 
             <include
                 android:id="@+id/bottom_page"
                 layout="@layout/bottom_page"
-                app:vm="@{vm}" />
+                app:vm="@{vm}"
+                app:presenter="@{presenter}"/>
         </LinearLayout>
     </ScrollView>
 </layout>

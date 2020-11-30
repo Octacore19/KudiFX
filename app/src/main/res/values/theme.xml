@@ -17,6 +17,7 @@
         <item name="colorOnSurface">@color/color_blue2</item>
 
         <item name="android:textColorPrimary">@color/color_grey3</item>
+        <item name="colorControlActivated">@android:color/darker_gray</item>
 
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
@@ -43,6 +44,7 @@
         <item name="materialButtonStyle">@style/AppTheme.Button</item>
         <item name="materialButtonOutlinedStyle">@style/AppTheme.OutlineButton</item>
         <item name="borderlessButtonStyle">@style/AppTheme.TextButton</item>
+        <item name="materialCardViewStyle">@style/AppTheme.CardView</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

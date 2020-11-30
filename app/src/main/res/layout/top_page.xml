@@ -6,30 +6,23 @@
     <data>
 
         <variable
-            name="currentAdapter"
-            type="com.octacoresoftwares.kudifx.ui.spinner.CountryAdapter" />
-
-        <variable
-            name="destinationAdapter"
-            type="com.octacoresoftwares.kudifx.ui.spinner.CountryAdapter" />
-
-        <variable
-            name="spinnerListener"
-            type="android.widget.AdapterView.OnItemSelectedListener" />
-
-        <variable
             name="vm"
             type="com.octacoresoftwares.kudifx.ui.MainActivityViewModel" />
+
+        <variable
+            name="presenter"
+            type="com.octacoresoftwares.kudifx.ui.MainActivityPresenter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingStart="16dp"
         android:paddingTop="24dp"
-        android:paddingEnd="16dp">
+        android:paddingEnd="16dp"
+        android:paddingBottom="64dp">
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/menu_icon"
             style="@style/AppTheme.TextButton"
             android:layout_width="56dp"
@@ -40,19 +33,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/sign_up_button"
             style="@style/AppTheme.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:text="@string/sign_up"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/menu_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/menu_icon" />
 
-        <com.google.android.material.textview.MaterialTextView
+        <TextView
             android:id="@+id/materialTextView"
             style="?textAppearanceHeadline3"
             android:layout_width="wrap_content"
@@ -65,7 +57,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/menu_icon" />
 
-        <com.google.android.material.textview.MaterialTextView
+        <TextView
             android:id="@+id/materialTextView2"
             style="?textAppearanceHeadline3"
             android:layout_width="wrap_content"
@@ -91,39 +83,43 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/origin_currency_layout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="48dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/materialTextView2"
-            app:suffixText="EUR">
+            app:suffixText="@{vm.originLabel}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/origin_currency"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal" />
+                android:layout_height="match_parent"
+                android:hint="@{vm.originRateHint}"
+                android:inputType="numberDecimal"
+                android:text="@={vm.originRateText}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/destination_currency_layout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/origin_currency_layout"
-            app:suffixText="PLN">
+            app:suffixText="@{vm.destinationLabel}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/destination_currency"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal" />
+                android:layout_height="match_parent"
+                android:hint="@{vm.destinationRateHint}"
+                android:inputType="numberDecimal"
+                android:text="@={vm.destinationRateText}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
@@ -139,12 +135,13 @@
             android:paddingEnd="24dp"
             android:paddingBottom="8dp"
             android:spinnerMode="dropdown"
-            app:adapter="@{currentAdapter}"
-            app:onItemSelected="@{spinnerListener}"
+            app:adapter="@{presenter.originAdapter}"
+            app:defaultSelection="@{vm.defaultOrigin}"
             app:layout_constraintEnd_toStartOf="@+id/imageView2"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/destination_currency_layout" />
+            app:layout_constraintTop_toBottomOf="@+id/destination_currency_layout"
+            app:onItemSelected="@{presenter.spinnerListener}" />
 
         <ImageView
             android:id="@+id/imageView2"
@@ -172,21 +169,23 @@
             android:paddingEnd="24dp"
             android:paddingBottom="8dp"
             android:spinnerMode="dropdown"
-            app:adapter="@{destinationAdapter}"
-            app:onItemSelected="@{spinnerListener}"
+            app:adapter="@{presenter.destinationAdapter}"
+            app:defaultSelection="@{vm.defaultDestination}"
             app:layout_constraintBottom_toBottomOf="@+id/imageView2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+            app:layout_constraintTop_toTopOf="@+id/imageView2"
+            app:onItemSelected="@{presenter.spinnerListener}" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/materialButton2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="48dp"
             android:layout_marginEnd="8dp"
+            android:onClick="@{() -> vm.convertAnswer()}"
             android:text="@string/convert"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -201,6 +200,7 @@
             android:layout_marginEnd="8dp"
             android:gravity="center"
             android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/materialButton2">
@@ -208,8 +208,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mid_market"
-                android:textAppearance="@style/TextAppearanceBody1" />
+                android:textAppearance="@style/TextAppearanceBody1"
+                app:mainTextRes="@{vm.textRes}"
+                app:text="@{vm.timestamp}" />
 
             <ImageView
                 android:id="@+id/imageView3"

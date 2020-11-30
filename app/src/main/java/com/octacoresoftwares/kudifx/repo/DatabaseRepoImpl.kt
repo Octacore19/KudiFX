@@ -8,8 +8,9 @@ import com.octacoresoftwares.kudifx.local.Latest
 import com.octacoresoftwares.kudifx.local.Rates
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class DatabaseRepoImpl(
+class DatabaseRepoImpl @Inject constructor(
     private val dao: RatesDao
 ): DatabaseRepo {
 
