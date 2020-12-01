@@ -15,6 +15,7 @@ import com.octacoresoftwares.kudifx.repo.Repository
 import com.octacoresoftwares.kudifx.repo.RepositoryImpl
 import com.octacoresoftwares.kudifx.repo.Results
 import com.octacoresoftwares.kudifx.ui.spinner.CountryAdapter
+import com.octacoresoftwares.kudifx.utils.formatCurrency
 import com.octacoresoftwares.kudifx.utils.generateCountries
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -64,7 +65,7 @@ class MainActivityPresenter(
     }
     val buttonClickLister = View.OnClickListener {
         if (model.answer.isNotEmpty()) {
-            model.destinationRateText = model.answer.toBigDecimal().toPlainString()
+            model.destinationRateText = formatCurrency(model.answer.toBigDecimal())
         }
     }
 
@@ -80,7 +81,7 @@ class MainActivityPresenter(
                     Log.wtf(TAG, result.exception)
                 }
             }
-            delay(5.times(1000))
+            delay(60.times(1000))
         }
     }
     fun getMostRecentRate() = model.viewModelScope.launch {
@@ -110,7 +111,7 @@ class MainActivityPresenter(
                     Log.wtf(TAG, result.exception)
                 }
             }
-            delay(5.times(1000))
+            delay(60.times(1000))
         }
     }
 }

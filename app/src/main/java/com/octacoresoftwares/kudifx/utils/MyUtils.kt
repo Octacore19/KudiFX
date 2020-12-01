@@ -12,6 +12,9 @@ import com.octacoresoftwares.kudifx.R
 import com.octacoresoftwares.kudifx.local.Latest
 import com.octacoresoftwares.kudifx.local.Rates
 import com.octacoresoftwares.kudifx.ui.spinner.Country
+import java.math.BigDecimal
+import java.text.DecimalFormat
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
@@ -178,6 +181,11 @@ fun checkNetwork(context: Context, callback: NetworkUtilsCallback) {
         Log.e("NetworkUtils", "Exception occurred in checkNetwork method", e)
         callback.isConnected(value = STATUS.ERROR)
     }
+}
+
+fun formatCurrency(amount: BigDecimal): String {
+    val formatter = DecimalFormat("#,###.##") as NumberFormat
+    return formatter.format(amount)
 }
 
 enum class STATUS(val value: Int) {

@@ -1,6 +1,7 @@
 package com.octacoresoftwares.kudifx.ui
 
 import android.content.Context
+import android.util.Log
 import androidx.databinding.Bindable
 import com.github.mikephil.charting.data.Entry
 import com.octacoresoftwares.kudifx.BR
@@ -17,6 +18,7 @@ class MainActivityViewModel @Inject constructor(private val context: Context) : 
     val textRes = R.string.mid_market
     val defaultDestination = 7
     val defaultOrigin = 0
+    private var rate = 0.0
 
     @get: Bindable
     var progress = true
@@ -63,9 +65,10 @@ class MainActivityViewModel @Inject constructor(private val context: Context) : 
     var allRates: List<Rates>? = null
         set(value) {
             field = value
-            progress = field == null
             field?.let { rates ->
                 destinationCountrySelected?.let {
+                    Log.i(TAG, "Country: $it, Rates: $field")
+                    progress = field == null
                     this.rates = returnRates(it.shortName, rates, context)
                     entries = fillEntryList(this.rates, numberOfHistoryDays)
                 }
@@ -79,9 +82,7 @@ class MainActivityViewModel @Inject constructor(private val context: Context) : 
             field = value
             progress = field == null
             field?.let { allRates ->
-                destinationCountrySelected?.let {
-                    labels = returnDays(allRates, numberOfHistoryDays)
-                }
+                labels = returnDays(allRates, numberOfHistoryDays)
             }
             notifyPropertyChanged(BR.allRatesAvailable)
         }
@@ -141,6 +142,12 @@ class MainActivityViewModel @Inject constructor(private val context: Context) : 
         set(value) {
             progress = true
             field = value
+            val tempAllRates = allRates
+            val tempLatest = latestRate
+            val tempAllLatest = allRatesAvailable
+            allRates = tempAllRates
+            latestRate = tempLatest
+            allRatesAvailable = tempAllLatest
             notifyPropertyChanged(BR.destinationCountrySelected)
         }
 
@@ -194,14 +201,5 @@ class MainActivityViewModel @Inject constructor(private val context: Context) : 
             field = value
             notifyPropertyChanged(BR.labels)
         }
-
-    private var rate = 0.0
-        /*private set(value) {
-            field = value
-            if (originRateText.isNotEmpty()) {
-                val head = originRateText.toDouble()
-                destinationRateHint = head.times(field).toBigDecimal().toPlainString()
-            }
-        }*/
 }
 
