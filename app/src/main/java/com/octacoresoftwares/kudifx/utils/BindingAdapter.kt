@@ -3,11 +3,8 @@ package com.octacoresoftwares.kudifx.utils
 import android.graphics.Color
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
-import android.widget.AdapterView
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.TextView
-import androidx.annotation.StringRes
+import android.view.View
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
@@ -20,6 +17,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.material.button.MaterialButtonToggleGroup
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.octacoresoftwares.kudifx.R
 import com.octacoresoftwares.kudifx.ui.spinner.CountryAdapter
 
@@ -32,7 +30,7 @@ fun TextView.setText(res: Int, text: String) {
 }
 
 @BindingAdapter(value = ["adapter"])
-fun Spinner.setSpinnerAdapter(adapt: CountryAdapter){
+fun Spinner.setSpinnerAdapter(adapt: CountryAdapter) {
     adapter = adapt
 }
 
@@ -55,13 +53,13 @@ fun MaterialButtonToggleGroup.addButtonCheckedListener(listener: MaterialButtonT
 }
 
 @BindingAdapter(value = ["setImage"])
-fun ImageView.setImage(url: Int){
+fun ImageView.setImage(url: Int) {
     this.setImageResource(url)
 }
 
 @BindingAdapter(value = ["entries", "labels"], requireAll = false)
 fun LineChart.setDataEntries(entries: List<Entry>?, labels: List<String>?) {
-    if (entries != null) {
+    if (entries != null && entries.size > 1) {
         val lineDataSet = LineDataSet(entries, "rates")
         lineDataSet.axisDependency = YAxis.AxisDependency.RIGHT
         lineDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
@@ -107,5 +105,14 @@ fun LineChart.setDataEntries(entries: List<Entry>?, labels: List<String>?) {
 
         this.data = LineData(lineDataSet)
         this.invalidate()
+    }
+}
+
+@BindingAdapter(value = ["displayProgress"])
+fun ProgressBar.displayIndicator(display: Boolean) {
+    if (display) {
+        this.visibility = View.VISIBLE
+    } else {
+        this.visibility = View.GONE
     }
 }

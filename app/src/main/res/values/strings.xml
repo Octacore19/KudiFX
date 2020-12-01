@@ -10,4 +10,5 @@
     <string name="past_90_days">Past 90 days</string>
     <string name="past_30_days">Past 30 days</string>
     <string name="get_rate_alerts_straight_to_your_email_inbox"><u>Get rate alerts straight to your email inbox</u></string>
+    <string name="loading_data_please_wait">Loading data.. Please Wait</string>
 </resources>

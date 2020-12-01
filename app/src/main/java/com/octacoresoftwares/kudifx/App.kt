@@ -24,9 +24,14 @@ class App: Application(), HasAndroidInjector, Configuration.Provider {
         appComponent.inject(this)
         super.onCreate()
 
+        val constraint = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
         WorkManager.getInstance(this)
             .enqueueUniquePeriodicWork("kudifx", ExistingPeriodicWorkPolicy.REPLACE,
-                PeriodicWorkRequestBuilder<LatestRatesWorker>(30, TimeUnit.MINUTES).build()
+                PeriodicWorkRequestBuilder<LatestRatesWorker>(30, TimeUnit.MINUTES)
+                    .setConstraints(constraint)
+                    .build()
             )
     }
 

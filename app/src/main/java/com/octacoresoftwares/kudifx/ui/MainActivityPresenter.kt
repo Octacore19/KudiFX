@@ -58,6 +58,13 @@ class MainActivityPresenter(
                 R.id.thirty_days -> model.numberOfHistoryDays = 30
                 R.id.ninety_days -> model.numberOfHistoryDays = 90
             }
+        } else {
+            model.numberOfHistoryDays = 0
+        }
+    }
+    val buttonClickLister = View.OnClickListener {
+        if (model.answer.isNotEmpty()) {
+            model.destinationRateText = model.answer.toBigDecimal().toPlainString()
         }
     }
 
@@ -73,7 +80,7 @@ class MainActivityPresenter(
                     Log.wtf(TAG, result.exception)
                 }
             }
-            delay(60.times(1000))
+            delay(5.times(1000))
         }
     }
     fun getMostRecentRate() = model.viewModelScope.launch {
@@ -88,7 +95,7 @@ class MainActivityPresenter(
                     Log.wtf(TAG, result.exception)
                 }
             }
-            delay(60.times(1000))
+            delay(5.times(1000))
         }
     }
     fun getAllRates() = model.viewModelScope.launch {
@@ -103,7 +110,7 @@ class MainActivityPresenter(
                     Log.wtf(TAG, result.exception)
                 }
             }
-            delay(60.times(1000))
+            delay(5.times(1000))
         }
     }
 }

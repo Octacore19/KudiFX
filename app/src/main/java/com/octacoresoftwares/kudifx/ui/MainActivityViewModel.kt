@@ -1,10 +1,7 @@
 package com.octacoresoftwares.kudifx.ui
 
 import android.content.Context
-import android.util.Log
 import androidx.databinding.Bindable
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.github.mikephil.charting.data.Entry
 import com.octacoresoftwares.kudifx.BR
 import com.octacoresoftwares.kudifx.R
@@ -22,6 +19,13 @@ class MainActivityViewModel @Inject constructor(private val context: Context) : 
     val defaultOrigin = 0
 
     @get: Bindable
+    var progress = true
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.progress)
+        }
+
+    @get: Bindable
     var rates: List<Double>? = null
         set(value) {
             field = value
@@ -32,6 +36,11 @@ class MainActivityViewModel @Inject constructor(private val context: Context) : 
     var latestRate: Latest? = null
         set(value) {
             field = value
+            progress = field == null
+            val tempOriginCountry = originCountrySelected
+            val tempDestinationCountry = destinationCountrySelected
+            originCountrySelected = tempOriginCountry
+            destinationCountrySelected = tempDestinationCountry
             notifyPropertyChanged(BR.latestRate)
         }
 
@@ -39,6 +48,8 @@ class MainActivityViewModel @Inject constructor(private val context: Context) : 
     var allRates: List<Rates>? = null
         set(value) {
             field = value
+            val tempDestinationCountry = destinationCountrySelected
+            destinationCountrySelected = tempDestinationCountry
             notifyPropertyChanged(BR.allRates)
         }
 
@@ -46,6 +57,8 @@ class MainActivityViewModel @Inject constructor(private val context: Context) : 
     var allRatesAvailable: List<Latest>? = null
         set(value) {
             field = value
+            val tempDestinationCountry = destinationCountrySelected
+            destinationCountrySelected = tempDestinationCountry
             notifyPropertyChanged(BR.allRatesAvailable)
         }
 
@@ -59,12 +72,12 @@ class MainActivityViewModel @Inject constructor(private val context: Context) : 
     @get: Bindable
     var answer = ""
         set(value) {
-            field = value
             destinationRateHint = if (field.isNotEmpty()) {
                 field
             } else {
                 1.times(rate).toBigDecimal().toPlainString()
             }
+            field = value
             notifyPropertyChanged(BR.answer)
         }
 
@@ -161,6 +174,8 @@ class MainActivityViewModel @Inject constructor(private val context: Context) : 
     var numberOfHistoryDays = 30
         set(value) {
             field = value
+            val tempDestinationCountry = destinationCountrySelected
+            destinationCountrySelected = tempDestinationCountry
             notifyPropertyChanged(BR.numberOfHistoryDays)
         }
 
@@ -186,11 +201,5 @@ class MainActivityViewModel @Inject constructor(private val context: Context) : 
                 destinationRateText = head.times(field).toBigDecimal().toPlainString()
             }
         }
-
-    fun convertAnswer() {
-        if (answer.isNotEmpty()) {
-            destinationRateText = answer.toBigDecimal().toPlainString()
-        }
-    }
 }
 
