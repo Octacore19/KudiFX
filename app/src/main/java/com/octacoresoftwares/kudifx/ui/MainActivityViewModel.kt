@@ -36,11 +36,26 @@ class MainActivityViewModel @Inject constructor(private val context: Context) : 
     var latestRate: Latest? = null
         set(value) {
             field = value
-            progress = field == null
-            val tempOriginCountry = originCountrySelected
-            val tempDestinationCountry = destinationCountrySelected
-            originCountrySelected = tempOriginCountry
-            destinationCountrySelected = tempDestinationCountry
+            field?.let { latest ->
+                originCountrySelected?.let {
+                    progress = field == null
+                    val rate = returnRate(it.shortName, latest.rates, context)
+                    originRateHint = rate.toInt().toString()
+                    originLabel = it.shortName
+                }
+                destinationCountrySelected?.let {
+                    progress = field == null
+                    rate = returnRate(it.shortName, latest.rates, context)
+                    destinationLabel = it.shortName
+                    destinationRateHint = if (originRateText.isNotEmpty()) {
+                        val head = originRateText.toDouble()
+                        head.times(rate).toBigDecimal().toPlainString()
+                    } else {
+                        rate.toBigDecimal().toPlainString()
+                    }
+                }
+                timestamp = getTime(latest.timestamp)
+            }
             notifyPropertyChanged(BR.latestRate)
         }
 
@@ -48,8 +63,13 @@ class MainActivityViewModel @Inject constructor(private val context: Context) : 
     var allRates: List<Rates>? = null
         set(value) {
             field = value
-            val tempDestinationCountry = destinationCountrySelected
-            destinationCountrySelected = tempDestinationCountry
+            progress = field == null
+            field?.let { rates ->
+                destinationCountrySelected?.let {
+                    this.rates = returnRates(it.shortName, rates, context)
+                    entries = fillEntryList(this.rates, numberOfHistoryDays)
+                }
+            }
             notifyPropertyChanged(BR.allRates)
         }
 
@@ -57,8 +77,12 @@ class MainActivityViewModel @Inject constructor(private val context: Context) : 
     var allRatesAvailable: List<Latest>? = null
         set(value) {
             field = value
-            val tempDestinationCountry = destinationCountrySelected
-            destinationCountrySelected = tempDestinationCountry
+            progress = field == null
+            field?.let { allRates ->
+                destinationCountrySelected?.let {
+                    labels = returnDays(allRates, numberOfHistoryDays)
+                }
+            }
             notifyPropertyChanged(BR.allRatesAvailable)
         }
 
@@ -72,11 +96,6 @@ class MainActivityViewModel @Inject constructor(private val context: Context) : 
     @get: Bindable
     var answer = ""
         set(value) {
-            destinationRateHint = if (field.isNotEmpty()) {
-                field
-            } else {
-                1.times(rate).toBigDecimal().toPlainString()
-            }
             field = value
             notifyPropertyChanged(BR.answer)
         }
@@ -85,6 +104,8 @@ class MainActivityViewModel @Inject constructor(private val context: Context) : 
     var originRateText = ""
         set(value) {
             field = value
+            notifyPropertyChanged(BR.originRateText)
+
             destinationRateText = ""
             answer = if (field.isNotEmpty()) {
                 val head = field.toDouble()
@@ -92,7 +113,12 @@ class MainActivityViewModel @Inject constructor(private val context: Context) : 
             } else {
                 ""
             }
-            notifyPropertyChanged(BR.originRateText)
+
+            destinationRateHint = if (answer.isNotEmpty()) {
+                answer
+            } else {
+                1.times(rate).toBigDecimal().toPlainString()
+            }
         }
 
     @get: Bindable
@@ -105,40 +131,16 @@ class MainActivityViewModel @Inject constructor(private val context: Context) : 
     @get: Bindable
     var originCountrySelected: Country? = null
         set(value) {
+            progress = true
             field = value
-            field?.let { country ->
-                latestRate?.let { latest ->
-                    val rate = returnRate(country.shortName, latest.rates, context)
-                    originRateHint = rate.toInt().toString()
-                    originLabel = country.shortName
-                }
-            }
             notifyPropertyChanged(BR.originCountrySelected)
         }
 
     @get:Bindable
     var destinationCountrySelected: Country? = null
         set(value) {
+            progress = true
             field = value
-            field?.let { country ->
-                latestRate?.let { latest ->
-                    rate = returnRate(country.shortName, latest.rates, context)
-                    allRates?.let {
-                        returnRates(country.shortName, it, context)
-                    }?.let {
-                        rates = it
-                    }
-                    allRatesAvailable?.let {
-                        returnDays(it, numberOfHistoryDays)
-                    }?.let {
-                        labels = it
-                    }
-                    entries = fillEntryList(rates, numberOfHistoryDays)
-                    destinationRateHint = rate.toBigDecimal().toPlainString()
-                    destinationLabel = country.shortName
-                    timestamp = getTime(latest.timestamp)
-                }
-            }
             notifyPropertyChanged(BR.destinationCountrySelected)
         }
 
@@ -194,12 +196,12 @@ class MainActivityViewModel @Inject constructor(private val context: Context) : 
         }
 
     private var rate = 0.0
-        private set(value) {
+        /*private set(value) {
             field = value
             if (originRateText.isNotEmpty()) {
                 val head = originRateText.toDouble()
-                destinationRateText = head.times(field).toBigDecimal().toPlainString()
+                destinationRateHint = head.times(field).toBigDecimal().toPlainString()
             }
-        }
+        }*/
 }
 
