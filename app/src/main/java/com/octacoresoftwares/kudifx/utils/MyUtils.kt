@@ -2,7 +2,11 @@ package com.octacoresoftwares.kudifx.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.Network
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.github.mikephil.charting.data.Entry
 import com.octacoresoftwares.kudifx.R
 import com.octacoresoftwares.kudifx.local.Latest
@@ -151,4 +155,37 @@ fun getTime(s: Long): String {
     val sdf = SimpleDateFormat("HH:mm", Locale.ENGLISH)
     val netDate = Date(s.times(1000))
     return sdf.format(netDate)
+}
+
+@RequiresApi(Build.VERSION_CODES.N)
+fun checkNetwork(context: Context, callback: NetworkUtilsCallback) {
+    try {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+        connectivityManager?.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                callback.isConnected(value = STATUS.AVAILABLE)
+            }
+
+            override fun onLost(network: Network) {
+                callback.isConnected(value = STATUS.LOST)
+            }
+
+            override fun onUnavailable() {
+                callback.isConnected(value = STATUS.UNAVAILABLE)
+            }
+        })
+    } catch (e: Exception) {
+        Log.e("NetworkUtils", "Exception occurred in checkNetwork method", e)
+        callback.isConnected(value = STATUS.ERROR)
+    }
+}
+
+enum class STATUS(val value: Int) {
+    AVAILABLE(0),
+    LOST(-1),
+    UNAVAILABLE(-2),
+    ERROR(-10)
+}
+interface NetworkUtilsCallback {
+    fun isConnected(value: STATUS)
 }
