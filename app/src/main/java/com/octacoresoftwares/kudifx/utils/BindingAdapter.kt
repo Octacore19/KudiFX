@@ -65,6 +65,7 @@ fun LineChart.setDataEntries(entries: List<Entry>?, labels: List<String>?) {
         val lineDataSet = LineDataSet(entries, "rates")
         lineDataSet.axisDependency = YAxis.AxisDependency.RIGHT
         lineDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
+        lineDataSet.isHighlightEnabled = false
         lineDataSet.lineWidth = 0f
         lineDataSet.circleHoleRadius = 2.5f
         lineDataSet.cubicIntensity = 0.2f

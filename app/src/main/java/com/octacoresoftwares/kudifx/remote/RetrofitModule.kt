@@ -19,13 +19,12 @@ class RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideNetworkApi(retrofit: Retrofit): NetworkApi
-            = retrofit.create(NetworkApi::class.java)
+    fun provideNetworkApi(retrofit: Retrofit): NetworkApi = retrofit.create(NetworkApi::class.java)
 
 
     @Provides
     @Singleton
-    fun provideRetrofit(client: OkHttpClient) = Retrofit.Builder()
+    fun provideRetrofit(client: OkHttpClient): Retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
